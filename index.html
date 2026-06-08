@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victor Kanyili | Cybersecurity Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#home" class="logo">VK.</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#blog">Blog</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <p class="greeting">System initialized. Welcome.</p>
+                <h1>Victor Kanyili</h1>
+                <h2>Cloud Security & Automations Engineer</h2>
+                <p class="hero-desc">Securing infrastructure, managing identity platforms, and building intelligent automation workflows.</p>
+                <a href="#projects" class="btn">View Architecture & Projects</a>
+            </div>
+        </section>
+
+        <section id="about" class="content-section">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>I am a cybersecurity professional and developer specializing in cloud security, identity and access management (Microsoft Entra, AWS), and forensics. My approach bridges the gap between robust security protocols and efficient business operations.</p>
+                    <p>Beyond traditional security, I have a deep focus on integrating agentic AI (LangChain, Model Context Protocol) and low-code solutions (n8n, Python) to build automated, responsive security workflows and intelligent systems.</p>
+                </div>
+                <div class="skills-container">
+                    <span class="skill-tag">AWS & Azure Security</span>
+                    <span class="skill-tag">Identity Management</span>
+                    <span class="skill-tag">SIEM Implementation</span>
+                    <span class="skill-tag">Python & JavaScript</span>
+                    <span class="skill-tag">n8n Automation</span>
+                    <span class="skill-tag">Agentic AI</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="content-section bg-alt">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>AWS SIEM & Cloud Defense</h3>
+                    <p>Designed and deployed a comprehensive SIEM architecture on AWS. Implemented robust identity governance, network security protocols, and secure compute environments.</p>
+                    <a href="#" class="project-link">View Repository <span>&rarr;</span></a>
+                </div>
+                <div class="project-card">
+                    <h3>Automated Threat Response System</h3>
+                    <p>Engineered a low-code automation pipeline utilizing n8n and webhooks to orchestrate immediate responses to simulated network anomalies, logging data securely via Supabase.</p>
+                    <a href="#" class="project-link">View Repository <span>&rarr;</span></a>
+                </div>
+                <div class="project-card">
+                    <h3>Agentic AI Security Analyst</h3>
+                    <p>Developed an AI workflow using LangChain and Python to parse, analyze, and summarize security logs, reducing manual forensic analysis time by integrating with secure datastores.</p>
+                    <a href="#" class="project-link">View Repository <span>&rarr;</span></a>
+                </div>
+            </div>
+        </section>
+
+        <section id="blog" class="content-section">
+            <h2 class="section-title">Latest Transmissions</h2>
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <span class="date">May 12, 2026</span>
+                    <h3>Securing the Future: Integrating MCP in Security Workflows</h3>
+                    <p>An exploration of how the Model Context Protocol changes the way we handle context in automated cybersecurity analysis...</p>
+                    <a href="#" class="read-more">Read Post</a>
+                </article>
+                <article class="blog-card">
+                    <span class="date">April 04, 2026</span>
+                    <h3>Navigating Identity Management in Microsoft Entra</h3>
+                    <p>Best practices for configuring conditional access policies and securing hybrid identities across modern cloud environments...</p>
+                    <a href="#" class="read-more">Read Post</a>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="fixed-footer">
+        <div class="footer-content">
+            <p>&copy; 2026 Victor Kanyili. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://github.com/yourusername" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="https://linkedin.com/in/yourusername" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://twitter.com/yourusername" target="_blank" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
