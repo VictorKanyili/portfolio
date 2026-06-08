@@ -1,115 +1,1054 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Victor Kanyili | Cybersecurity Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kanyili Wambua — Cybersecurity Portfolio</title>
+  <meta name="description" content="Cybersecurity Analyst specializing in cloud security, threat detection, and identity & access management." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─────────── TOKENS ─────────── */
+    :root {
+      --bg:        #05090f;
+      --bg2:       #0a1120;
+      --bg3:       #0d1728;
+      --card:      #0f1e30;
+      --green:     #00e87a;
+      --green-dim: rgba(0,232,122,.08);
+      --green-bd:  rgba(0,232,122,.18);
+      --blue:      #38a3f5;
+      --blue-dim:  rgba(56,163,245,.08);
+      --blue-bd:   rgba(56,163,245,.18);
+      --txt:       #dde6f0;
+      --txt2:      #7a90a8;
+      --txt3:      #3a4f63;
+      --red:       #ff4d6a;
+      --footer-h:  60px;
+      --nav-h:     68px;
+      --radius:    6px;
+    }
+
+    /* ─────────── RESET ─────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--bg);
+      color: var(--txt);
+      font-family: 'Sora', sans-serif;
+      line-height: 1.7;
+      overflow-x: hidden;
+      padding-bottom: var(--footer-h);
+    }
+
+    /* Grid texture */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,232,122,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,232,122,.025) 1px, transparent 1px);
+      background-size: 52px 52px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--green-bd); border-radius: 2px; }
+
+    /* ─────────── NAV ─────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: rgba(5,9,15,.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--green-bd);
+      z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6%;
+    }
+
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--green);
+      text-decoration: none;
+      letter-spacing: .04em;
+    }
+    .nav-logo em { color: var(--txt3); font-style: normal; font-weight: 400; }
+
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .78rem; letter-spacing: .08em;
+      color: var(--txt2); text-decoration: none;
+      transition: color .2s;
+      position: relative;
+    }
+    .nav-links a.active,
+    .nav-links a:hover { color: var(--green); }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute; bottom: -6px; left: 0; right: 0;
+      height: 1px; background: var(--green);
+    }
+
+    /* hamburger */
+    .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .burger span { display: block; width: 22px; height: 2px; background: var(--txt2); border-radius: 1px; transition: all .3s; }
+    .burger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+    /* ─────────── SHARED LAYOUT ─────────── */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 6%; }
+
+    section {
+      position: relative; z-index: 1;
+      padding: 110px 0 80px;
+    }
+    section#home { padding-top: calc(var(--nav-h) + 70px); }
+
+    .sec-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .72rem; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--green);
+      margin-bottom: .5rem;
+    }
+    .sec-label::before { content: '// '; opacity: .45; }
+
+    .sec-title {
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 800; color: var(--txt);
+      line-height: 1.1; margin-bottom: 3rem;
+    }
+
+    /* divider */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--green-bd), transparent);
+      margin: 0 6%;
+    }
+
+    /* ─────────── ANIMATIONS ─────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.vis { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: .08s; }
+    .reveal-d2 { transition-delay: .16s; }
+    .reveal-d3 { transition-delay: .24s; }
+    .reveal-d4 { transition-delay: .32s; }
+    .reveal-d5 { transition-delay: .40s; }
+
+    @keyframes pulse  { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.35;transform:scale(.75)} }
+    @keyframes blink  { 0%,100%{opacity:1} 50%{opacity:0} }
+    @keyframes orbit  { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+    @keyframes orbitR { from{transform:rotate(0)} to{transform:rotate(-360deg)} }
+    @keyframes float  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+    @keyframes scanline {
+      0%   { transform: translateY(-100%); }
+      100% { transform: translateY(100vh); }
+    }
+
+    /* ─────────── HOME ─────────── */
+    #home { min-height: 100vh; display: flex; align-items: center; overflow: hidden; }
+
+    /* glow orbs */
+    .glow-a {
+      position: absolute; border-radius: 50%; pointer-events: none;
+      right: -8%; top: 8%;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,232,122,.07) 0%, transparent 65%);
+    }
+    .glow-b {
+      position: absolute; border-radius: 50%; pointer-events: none;
+      right: 5%; top: 20%;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(56,163,245,.06) 0%, transparent 70%);
+    }
+
+    /* shield SVG illustration */
+    .hero-visual {
+      position: absolute; right: 6%; top: 50%; transform: translateY(-50%);
+      width: 340px; height: 340px;
+      opacity: .65;
+      animation: float 6s ease-in-out infinite;
+    }
+    .orbit-ring { transform-origin: 170px 170px; }
+    .orbit-ring.a { animation: orbit  12s linear infinite; }
+    .orbit-ring.b { animation: orbitR 18s linear infinite; }
+    .orbit-ring.c { animation: orbit  24s linear infinite; }
+
+    .hero-content { position: relative; z-index: 2; max-width: 680px; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'JetBrains Mono', monospace; font-size: .75rem;
+      color: var(--green); background: var(--green-dim);
+      border: 1px solid var(--green-bd); border-radius: 3px;
+      padding: 5px 13px; margin-bottom: 1.4rem;
+    }
+    .hero-badge::before {
+      content: ''; width: 7px; height: 7px;
+      background: var(--green); border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .hero-name {
+      font-size: clamp(3rem, 6.5vw, 5.2rem);
+      font-weight: 800; line-height: .95;
+      letter-spacing: -.02em; margin-bottom: 1rem;
+    }
+    .hero-name .first { color: var(--txt); }
+    .hero-name .last  { color: var(--green); display: block; }
+
+    .hero-type {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(.95rem, 2vw, 1.2rem);
+      color: var(--txt2); margin-bottom: 1.4rem;
+      display: flex; align-items: center; gap: 8px; min-height: 2em;
+    }
+    .prompt { color: var(--green); }
+    .typed  { color: var(--txt); }
+    .cursor { width: 2px; height: 1.15em; background: var(--green); animation: blink .75s infinite; flex-shrink: 0; }
+
+    .hero-desc { font-size: 1rem; color: var(--txt2); max-width: 520px; line-height: 1.85; margin-bottom: 2.2rem; }
+
+    .hero-cta { display: flex; gap: .9rem; flex-wrap: wrap; }
+
+    .btn {
+      font-family: 'JetBrains Mono', monospace; font-size: .85rem;
+      font-weight: 700; letter-spacing: .05em;
+      padding: 11px 26px; border-radius: var(--radius);
+      cursor: pointer; text-decoration: none;
+      transition: all .2s; border: none;
+    }
+    .btn-g {
+      background: var(--green); color: #050f18;
+    }
+    .btn-g:hover { background: #00f585; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,232,122,.28); }
+    .btn-o {
+      background: transparent; color: var(--green);
+      border: 1px solid var(--green-bd);
+    }
+    .btn-o:hover { background: var(--green-dim); border-color: var(--green); }
+
+    .hero-stats {
+      display: flex; gap: 3rem; flex-wrap: wrap;
+      margin-top: 3rem; padding-top: 2.5rem;
+      border-top: 1px solid var(--green-bd);
+    }
+    .stat-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2rem; font-weight: 700; color: var(--green);
+      display: block;
+    }
+    .stat-lbl {
+      font-size: .72rem; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--txt3);
+    }
+
+    /* ─────────── ABOUT ─────────── */
+    #about { background: var(--bg2); }
+
+    .about-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+
+    .about-text p { color: var(--txt2); margin-bottom: 1.15rem; line-height: 1.9; font-size: .97rem; }
+    .about-text p strong { color: var(--green); font-weight: 600; }
+
+    .certs {
+      display: grid; grid-template-columns: 1fr 1fr; gap: .6rem;
+      margin-top: 1.8rem;
+    }
+    .cert {
+      display: flex; align-items: center; gap: 9px;
+      padding: 9px 13px;
+      background: var(--card); border: 1px solid var(--green-bd);
+      border-radius: var(--radius);
+      font-family: 'JetBrains Mono', monospace; font-size: .73rem;
+      color: var(--green); white-space: nowrap;
+    }
+    .cert-icon { font-size: 1rem; }
+    .cert.pursuing { color: var(--blue); border-color: var(--blue-bd); }
+
+    /* skills panel */
+    .skills-panel {
+      background: var(--card); border: 1px solid var(--green-bd);
+      border-radius: var(--radius); padding: 1.8rem;
+    }
+    .panel-title {
+      font-family: 'JetBrains Mono', monospace; font-size: .8rem;
+      color: var(--green); margin-bottom: 1.6rem;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .panel-title::before { content: ''; width: 8px; height: 8px; background: var(--green); border-radius: 50%; }
+
+    .skill { margin-bottom: 1.1rem; }
+    .skill-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
+    .skill-name { font-size: .85rem; color: var(--txt); }
+    .skill-pct  { font-family: 'JetBrains Mono', monospace; font-size: .75rem; color: var(--green); }
+    .track { height: 3px; background: rgba(255,255,255,.05); border-radius: 2px; overflow: hidden; }
+    .fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--green), var(--blue));
+      border-radius: 2px; width: 0;
+      transition: width 1.3s cubic-bezier(.16,1,.3,1);
+    }
+
+    .tags {
+      display: flex; flex-wrap: wrap; gap: 7px;
+      margin-top: 1.4rem; padding-top: 1.4rem;
+      border-top: 1px solid var(--green-bd);
+    }
+    .tag {
+      font-family: 'JetBrains Mono', monospace; font-size: .68rem;
+      padding: 4px 9px;
+      border-radius: 3px; white-space: nowrap;
+    }
+    .tag-g { background: var(--green-dim); border: 1px solid var(--green-bd); color: var(--green); }
+    .tag-b { background: var(--blue-dim);  border: 1px solid var(--blue-bd);  color: var(--blue); }
+
+    /* ─────────── PROJECTS ─────────── */
+    #projects { background: var(--bg); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+
+    .pcard {
+      background: var(--card); border: 1px solid var(--green-bd);
+      border-radius: var(--radius); padding: 1.8rem;
+      position: relative; overflow: hidden;
+      transition: all .3s; text-decoration: none; color: inherit;
+      display: flex; flex-direction: column;
+    }
+    .pcard::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--green), var(--blue));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .35s;
+    }
+    .pcard:hover { border-color: rgba(0,232,122,.35); transform: translateY(-5px); box-shadow: 0 24px 64px rgba(0,0,0,.5); }
+    .pcard:hover::after { transform: scaleX(1); }
+
+    /* featured spans 2 cols */
+    .pcard.feat {
+      grid-column: span 2;
+      flex-direction: row; gap: 2rem; align-items: center;
+    }
+    .feat-visual {
+      flex: 0 0 160px; display: flex; align-items: center; justify-content: center;
+      height: 160px;
+      background: rgba(0,232,122,.03);
+      border-radius: var(--radius);
+      border: 1px dashed var(--green-bd);
+    }
+
+    .pcard-ico { font-size: 1.8rem; margin-bottom: .85rem; }
+    .pcard-cat {
+      font-family: 'JetBrains Mono', monospace; font-size: .67rem;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: var(--green); margin-bottom: .6rem;
+    }
+    .pcard-title {
+      font-size: 1rem; font-weight: 700; color: var(--txt);
+      line-height: 1.3; margin-bottom: .7rem;
+    }
+    .pcard-desc {
+      font-size: .875rem; color: var(--txt2);
+      line-height: 1.75; flex: 1; margin-bottom: 1.2rem;
+    }
+    .pcard-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 1.2rem; }
+    .ptag {
+      font-family: 'JetBrains Mono', monospace; font-size: .65rem;
+      padding: 2px 8px; border-radius: 2px;
+      background: rgba(0,232,122,.05);
+      border: 1px solid rgba(0,232,122,.12);
+      color: var(--txt2);
+    }
+    .pcard-link {
+      font-family: 'JetBrains Mono', monospace; font-size: .78rem;
+      color: var(--green); display: flex; align-items: center; gap: 5px;
+      margin-top: auto; text-decoration: none;
+      transition: gap .2s;
+    }
+    .pcard:hover .pcard-link { gap: 10px; }
+
+    /* ─────────── BLOG ─────────── */
+    #blog { background: var(--bg2); }
+
+    .blog-grid {
+      display: grid; grid-template-columns: repeat(2,1fr); gap: 1.2rem;
+    }
+
+    .bcard {
+      background: var(--card); border: 1px solid var(--green-bd);
+      border-radius: var(--radius); overflow: hidden;
+      text-decoration: none; color: inherit; display: block;
+      transition: all .3s;
+    }
+    .bcard:hover { border-color: rgba(0,232,122,.35); transform: translateY(-5px); box-shadow: 0 24px 64px rgba(0,0,0,.5); }
+
+    .bcard-img {
+      height: 160px; background: var(--bg3);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .bcard-img svg { opacity: .25; }
+    .bcard-img-grad {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(0,232,122,.12), rgba(56,163,245,.12));
+    }
+
+    .bcard-body { padding: 1.4rem; }
+    .bcard-meta { display: flex; align-items: center; gap: .75rem; margin-bottom: .65rem; }
+    .bcard-date { font-family: 'JetBrains Mono', monospace; font-size: .69rem; color: var(--txt3); }
+    .bcard-tag {
+      font-family: 'JetBrains Mono', monospace; font-size: .65rem;
+      padding: 2px 8px; border-radius: 2px;
+      background: var(--green-dim); border: 1px solid var(--green-bd);
+      color: var(--green);
+    }
+    .bcard-title { font-size: .98rem; font-weight: 700; color: var(--txt); line-height: 1.35; margin-bottom: .6rem; }
+    .bcard-excerpt { font-size: .85rem; color: var(--txt2); line-height: 1.75; }
+    .bcard-more {
+      font-family: 'JetBrains Mono', monospace; font-size: .76rem;
+      color: var(--green); margin-top: .9rem; display: flex; align-items: center; gap: 4px;
+      transition: gap .2s;
+    }
+    .bcard:hover .bcard-more { gap: 8px; }
+
+    /* ─────────── FOOTER ─────────── */
+    footer {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      height: var(--footer-h);
+      background: rgba(5,9,15,.95);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid var(--green-bd);
+      z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6%;
+    }
+
+    .foot-copy {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .72rem; color: var(--txt3);
+    }
+    .foot-copy span { color: var(--green); }
+
+    .socials { display: flex; align-items: center; gap: .9rem; }
+    .social {
+      display: flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px;
+      border: 1px solid var(--green-bd); border-radius: var(--radius);
+      color: var(--txt3); text-decoration: none;
+      transition: all .2s;
+    }
+    .social svg { width: 15px; height: 15px; fill: currentColor; }
+    .social:hover { color: var(--green); border-color: var(--green); background: var(--green-dim); transform: translateY(-2px); }
+
+    /* ─────────── RESPONSIVE ─────────── */
+    @media (max-width: 1024px) {
+      .projects-grid { grid-template-columns: repeat(2,1fr); }
+      .pcard.feat    { grid-column: span 2; }
+      .hero-visual   { display: none; }
+    }
+    @media (max-width: 768px) {
+      .burger { display: flex; }
+      .nav-links {
+        display: none; position: fixed;
+        top: var(--nav-h); left: 0; right: 0;
+        background: rgba(5,9,15,.98);
+        border-bottom: 1px solid var(--green-bd);
+        padding: 1.5rem 6%; flex-direction: column; gap: 1.5rem;
+        backdrop-filter: blur(20px);
+      }
+      .nav-links.open { display: flex; }
+      .about-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .pcard.feat { grid-column: span 1; flex-direction: column; }
+      .feat-visual { display: none; }
+      .blog-grid { grid-template-columns: 1fr; }
+      .certs { grid-template-columns: 1fr; }
+      .hero-stats { gap: 2rem; }
+      .foot-copy { display: none; }
+    }
+  </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="nav-content">
-            <a href="#home" class="logo">VK.</a>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#blog">Blog</a></li>
-            </ul>
+<!-- ═══════════ NAV ═══════════ -->
+<nav>
+  <a href="#home" class="nav-logo">K<em>.sec()</em></a>
+  <button class="burger" id="burger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navlinks">
+    <li><a href="#home">home</a></li>
+    <li><a href="#about">about</a></li>
+    <li><a href="#projects">projects</a></li>
+    <li><a href="#blog">blog</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════ HOME ═══════════ -->
+<section id="home">
+  <!-- decorative orbs -->
+  <div class="glow-a"></div>
+  <div class="glow-b"></div>
+
+  <!-- orbital shield illustration -->
+  <svg class="hero-visual" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Outer orbit ring A -->
+    <g class="orbit-ring a">
+      <circle cx="170" cy="170" r="155" stroke="rgba(0,232,122,.15)" stroke-width="1" stroke-dasharray="4 8"/>
+      <circle cx="170" cy="15" r="5" fill="#00e87a"/>
+      <circle cx="170" cy="325" r="3" fill="#38a3f5"/>
+    </g>
+    <!-- Orbit ring B -->
+    <g class="orbit-ring b">
+      <circle cx="170" cy="170" r="120" stroke="rgba(56,163,245,.12)" stroke-width="1" stroke-dasharray="2 6"/>
+      <circle cx="50" cy="170" r="4" fill="#38a3f5"/>
+      <circle cx="290" cy="170" r="4" fill="#00e87a"/>
+    </g>
+    <!-- Orbit ring C -->
+    <g class="orbit-ring c">
+      <circle cx="170" cy="170" r="85" stroke="rgba(0,232,122,.1)" stroke-width="1.5"/>
+      <circle cx="170" cy="85" r="6" fill="#00e87a" opacity=".7"/>
+    </g>
+    <!-- Shield body -->
+    <path d="M170 60 L230 90 L230 160 Q230 210 170 240 Q110 210 110 160 L110 90 Z"
+      fill="rgba(0,232,122,.06)" stroke="rgba(0,232,122,.5)" stroke-width="1.5"/>
+    <!-- Lock icon in shield -->
+    <rect x="158" y="148" width="24" height="18" rx="3" fill="rgba(0,232,122,.3)" stroke="#00e87a" stroke-width="1"/>
+    <path d="M162 148 V143 Q162 135 170 135 Q178 135 178 143 V148" stroke="#00e87a" stroke-width="1.5" fill="none"/>
+    <circle cx="170" cy="156" r="2.5" fill="#00e87a"/>
+    <line x1="170" y1="158" x2="170" y2="162" stroke="#00e87a" stroke-width="1.5"/>
+    <!-- Corner accents -->
+    <line x1="60" y1="60" x2="80" y2="60" stroke="rgba(0,232,122,.3)" stroke-width="1"/>
+    <line x1="60" y1="60" x2="60" y2="80" stroke="rgba(0,232,122,.3)" stroke-width="1"/>
+    <line x1="280" y1="60" x2="260" y2="60" stroke="rgba(0,232,122,.3)" stroke-width="1"/>
+    <line x1="280" y1="60" x2="280" y2="80" stroke="rgba(0,232,122,.3)" stroke-width="1"/>
+    <line x1="60" y1="280" x2="80" y2="280" stroke="rgba(0,232,122,.3)" stroke-width="1"/>
+    <line x1="60" y1="280" x2="60" y2="260" stroke="rgba(0,232,122,.3)" stroke-width="1"/>
+    <line x1="280" y1="280" x2="260" y2="280" stroke="rgba(0,232,122,.3)" stroke-width="1"/>
+    <line x1="280" y1="280" x2="280" y2="260" stroke="rgba(0,232,122,.3)" stroke-width="1"/>
+  </svg>
+
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">Open to Opportunities</div>
+      <h1 class="hero-name">
+        <span class="first">Kanyili</span>
+        <span class="last">Wambua</span>
+      </h1>
+      <div class="hero-type">
+        <span class="prompt">$&nbsp;</span>
+        <span class="typed" id="typed"></span>
+        <span class="cursor"></span>
+      </div>
+      <p class="hero-desc">
+        Cybersecurity Analyst at Peer Carbon Earth — specializing in Azure cloud security,
+        threat detection through dual-SIEM pipelines, identity &amp; access management, and
+        cryptographic integrity at the intersection of <strong style="color:var(--green)">climate tech &amp; cybersecurity</strong>.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-g">View Projects</a>
+        <a href="#about"    class="btn btn-o">About Me</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <span class="stat-val">2+</span>
+          <span class="stat-lbl">Years Experience</span>
         </div>
-    </nav>
-
-    <main>
-        <section id="home" class="hero">
-            <div class="hero-content">
-                <p class="greeting">System initialized. Welcome.</p>
-                <h1>Victor Kanyili</h1>
-                <h2>Cloud Security & Automations Engineer</h2>
-                <p class="hero-desc">Securing infrastructure, managing identity platforms, and building intelligent automation workflows.</p>
-                <a href="#projects" class="btn">View Architecture & Projects</a>
-            </div>
-        </section>
-
-        <section id="about" class="content-section">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-grid">
-                <div class="about-text">
-                    <p>I am a cybersecurity professional and developer specializing in cloud security, identity and access management (Microsoft Entra, AWS), and forensics. My approach bridges the gap between robust security protocols and efficient business operations.</p>
-                    <p>Beyond traditional security, I have a deep focus on integrating agentic AI (LangChain, Model Context Protocol) and low-code solutions (n8n, Python) to build automated, responsive security workflows and intelligent systems.</p>
-                </div>
-                <div class="skills-container">
-                    <span class="skill-tag">AWS & Azure Security</span>
-                    <span class="skill-tag">Identity Management</span>
-                    <span class="skill-tag">SIEM Implementation</span>
-                    <span class="skill-tag">Python & JavaScript</span>
-                    <span class="skill-tag">n8n Automation</span>
-                    <span class="skill-tag">Agentic AI</span>
-                </div>
-            </div>
-        </section>
-
-        <section id="projects" class="content-section bg-alt">
-            <h2 class="section-title">Featured Projects</h2>
-            <div class="project-grid">
-                <div class="project-card">
-                    <h3>AWS SIEM & Cloud Defense</h3>
-                    <p>Designed and deployed a comprehensive SIEM architecture on AWS. Implemented robust identity governance, network security protocols, and secure compute environments.</p>
-                    <a href="#" class="project-link">View Repository <span>&rarr;</span></a>
-                </div>
-                <div class="project-card">
-                    <h3>Automated Threat Response System</h3>
-                    <p>Engineered a low-code automation pipeline utilizing n8n and webhooks to orchestrate immediate responses to simulated network anomalies, logging data securely via Supabase.</p>
-                    <a href="#" class="project-link">View Repository <span>&rarr;</span></a>
-                </div>
-                <div class="project-card">
-                    <h3>Agentic AI Security Analyst</h3>
-                    <p>Developed an AI workflow using LangChain and Python to parse, analyze, and summarize security logs, reducing manual forensic analysis time by integrating with secure datastores.</p>
-                    <a href="#" class="project-link">View Repository <span>&rarr;</span></a>
-                </div>
-            </div>
-        </section>
-
-        <section id="blog" class="content-section">
-            <h2 class="section-title">Latest Transmissions</h2>
-            <div class="blog-grid">
-                <article class="blog-card">
-                    <span class="date">May 12, 2026</span>
-                    <h3>Securing the Future: Integrating MCP in Security Workflows</h3>
-                    <p>An exploration of how the Model Context Protocol changes the way we handle context in automated cybersecurity analysis...</p>
-                    <a href="#" class="read-more">Read Post</a>
-                </article>
-                <article class="blog-card">
-                    <span class="date">April 04, 2026</span>
-                    <h3>Navigating Identity Management in Microsoft Entra</h3>
-                    <p>Best practices for configuring conditional access policies and securing hybrid identities across modern cloud environments...</p>
-                    <a href="#" class="read-more">Read Post</a>
-                </article>
-            </div>
-        </section>
-    </main>
-
-    <footer class="fixed-footer">
-        <div class="footer-content">
-            <p>&copy; 2026 Victor Kanyili. All rights reserved.</p>
-            <div class="social-links">
-                <a href="https://github.com/yourusername" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
-                <a href="https://linkedin.com/in/yourusername" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="https://twitter.com/yourusername" target="_blank" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
-            </div>
+        <div>
+          <span class="stat-val">6+</span>
+          <span class="stat-lbl">Portfolio Projects</span>
         </div>
-    </footer>
+        <div>
+          <span class="stat-val">3</span>
+          <span class="stat-lbl">Certifications</span>
+        </div>
+        <div>
+          <span class="stat-val">2</span>
+          <span class="stat-lbl">SIEM Platforms</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script>
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
+<div class="divider"></div>
+
+<!-- ═══════════ ABOUT ═══════════ -->
+<section id="about">
+  <div class="container">
+    <p class="sec-label reveal">Who I Am</p>
+    <h2 class="sec-title reveal">About Me</h2>
+
+    <div class="about-wrap">
+      <div class="about-text">
+        <p class="reveal">
+          I'm a <strong>Cybersecurity Analyst</strong> at Peer Carbon Earth, Nairobi, Kenya,
+          where I work at a unique intersection of <strong>climate technology and information security</strong> —
+          building secure Azure cloud architectures and applying cryptographic integrity mechanisms to
+          carbon credit verification workflows.
+        </p>
+        <p class="reveal reveal-d1">
+          My day-to-day spans <strong>Azure RBAC &amp; Microsoft Entra ID</strong> administration,
+          threat detection through a Wazuh + Splunk dual-SIEM pipeline, incident response playbook
+          development, and Python-driven security automation. I map all detection efforts to
+          <strong>MITRE ATT&amp;CK</strong> for structured threat intelligence.
+        </p>
+        <p class="reveal reveal-d2">
+          I hold a <strong>First Class Honours degree in Information Security &amp; Forensics</strong>
+          and am actively working toward the <strong>AZ-500</strong> (Azure Security Engineer) and
+          <strong>eJPT</strong> (penetration testing) certifications to deepen both my defensive and
+          offensive security expertise.
+        </p>
+        <p class="reveal reveal-d2">
+          Outside the terminal — I enjoy public speaking, hiking around Nairobi, graphic design,
+          and tracking financial markets. I'm open to both onsite and remote security roles.
+        </p>
+        <div class="certs">
+          <div class="cert reveal"><span class="cert-icon">🛡️</span> ISC2 CC</div>
+          <div class="cert reveal reveal-d1"><span class="cert-icon">☁️</span> SC-900</div>
+          <div class="cert reveal reveal-d1"><span class="cert-icon">☁️</span> AWS CCP</div>
+          <div class="cert pursuing reveal reveal-d2"><span class="cert-icon">🔵</span> AZ-500 (pursuing)</div>
+          <div class="cert pursuing reveal reveal-d2"><span class="cert-icon">⚔️</span> eJPT (pursuing)</div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-d1">
+        <div class="skills-panel">
+          <div class="panel-title">Technical Proficiency</div>
+
+          <div class="skill">
+            <div class="skill-row"><span class="skill-name">Cloud Security (Azure)</span><span class="skill-pct">85%</span></div>
+            <div class="track"><div class="fill" data-w="85"></div></div>
+          </div>
+          <div class="skill">
+            <div class="skill-row"><span class="skill-name">IAM &amp; Access Control</span><span class="skill-pct">82%</span></div>
+            <div class="track"><div class="fill" data-w="82"></div></div>
+          </div>
+          <div class="skill">
+            <div class="skill-row"><span class="skill-name">SIEM &amp; Threat Detection</span><span class="skill-pct">80%</span></div>
+            <div class="track"><div class="fill" data-w="80"></div></div>
+          </div>
+          <div class="skill">
+            <div class="skill-row"><span class="skill-name">Python &amp; Security Scripting</span><span class="skill-pct">78%</span></div>
+            <div class="track"><div class="fill" data-w="78"></div></div>
+          </div>
+          <div class="skill">
+            <div class="skill-row"><span class="skill-name">Linux / Systems Admin</span><span class="skill-pct">76%</span></div>
+            <div class="track"><div class="fill" data-w="76"></div></div>
+          </div>
+          <div class="skill">
+            <div class="skill-row"><span class="skill-name">Incident Response &amp; GRC</span><span class="skill-pct">74%</span></div>
+            <div class="track"><div class="fill" data-w="74"></div></div>
+          </div>
+
+          <div class="tags">
+            <span class="tag tag-g">Wazuh</span>
+            <span class="tag tag-g">Splunk</span>
+            <span class="tag tag-g">Microsoft Entra ID</span>
+            <span class="tag tag-g">Azure RBAC</span>
+            <span class="tag tag-g">MITRE ATT&amp;CK</span>
+            <span class="tag tag-b">NIST CSF 2.0</span>
+            <span class="tag tag-b">NIST RMF</span>
+            <span class="tag tag-b">CIS Controls v8</span>
+            <span class="tag tag-b">ISO 27001</span>
+            <span class="tag tag-g">Wireshark</span>
+            <span class="tag tag-g">OpenVPN</span>
+            <span class="tag tag-b">Bash</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════ PROJECTS ═══════════ -->
+<section id="projects">
+  <div class="container">
+    <p class="sec-label reveal">What I've Built</p>
+    <h2 class="sec-title reveal">Projects</h2>
+
+    <div class="projects-grid">
+
+      <!-- Featured -->
+      <a href="#" class="pcard feat reveal">
+        <div class="feat-visual">
+          <svg viewBox="0 0 120 120" width="90" fill="none">
+            <circle cx="60" cy="60" r="45" stroke="rgba(0,232,122,.3)" stroke-width="1"/>
+            <circle cx="60" cy="60" r="30" stroke="rgba(0,232,122,.5)" stroke-width="1" stroke-dasharray="4 4"/>
+            <circle cx="60" cy="60" r="12" fill="rgba(0,232,122,.2)" stroke="#00e87a" stroke-width="1"/>
+            <circle cx="60" cy="60" r="4" fill="#00e87a"/>
+            <line x1="60" y1="15" x2="60" y2="30" stroke="#00e87a" stroke-width="1"/>
+            <line x1="60" y1="90" x2="60" y2="105" stroke="#00e87a" stroke-width="1"/>
+            <line x1="15" y1="60" x2="30" y2="60" stroke="#38a3f5" stroke-width="1"/>
+            <line x1="90" y1="60" x2="105" y2="60" stroke="#38a3f5" stroke-width="1"/>
+            <text x="60" y="64" text-anchor="middle" fill="#00e87a" font-size="7" font-family="JetBrains Mono">RBAC</text>
+          </svg>
+        </div>
+        <div style="flex:1; display:flex; flex-direction:column;">
+          <div class="pcard-ico">🛡️</div>
+          <div class="pcard-cat">Featured · Cloud Security · IAM</div>
+          <div class="pcard-title">Azure RBAC &amp; Microsoft Entra ID Lab</div>
+          <div class="pcard-desc">
+            End-to-end implementation of Role-Based Access Control in Azure using Microsoft Entra ID.
+            Covers user provisioning, custom role definitions, scope assignments, and Privileged Identity
+            Management (PIM) for just-in-time access — documented as part of the Microsoft ADC
+            Cybersecurity Skilling Program.
+          </div>
+          <div class="pcard-tags">
+            <span class="ptag">Azure</span>
+            <span class="ptag">Microsoft Entra ID</span>
+            <span class="ptag">RBAC</span>
+            <span class="ptag">PIM</span>
+            <span class="ptag">IAM</span>
+            <span class="ptag">Least Privilege</span>
+          </div>
+          <div class="pcard-link">View on GitHub <span>→</span></div>
+        </div>
+      </a>
+
+      <a href="#" class="pcard reveal reveal-d1">
+        <div class="pcard-ico">🔍</div>
+        <div class="pcard-cat">SIEM · Threat Detection</div>
+        <div class="pcard-title">Wazuh + Splunk Dual-SIEM Home Lab</div>
+        <div class="pcard-desc">
+          Architected a layered SIEM environment integrating Wazuh for endpoint detection and Splunk
+          Free for centralized log aggregation, correlation rule development, and threat alerting dashboards.
+        </div>
+        <div class="pcard-tags">
+          <span class="ptag">Wazuh</span>
+          <span class="ptag">Splunk</span>
+          <span class="ptag">SIEM</span>
+          <span class="ptag">Log Analysis</span>
+          <span class="ptag">MITRE ATT&amp;CK</span>
+        </div>
+        <div class="pcard-link">View on GitHub <span>→</span></div>
+      </a>
+
+      <a href="#" class="pcard reveal reveal-d2">
+        <div class="pcard-ico">🐍</div>
+        <div class="pcard-cat">Python · Security Tools</div>
+        <div class="pcard-title">Password Strength Analyzer</div>
+        <div class="pcard-desc">
+          GUI-based password strength checker built with PyQt6, implementing NIST SP 800-63B guidelines,
+          entropy scoring, pattern detection, and real-time visual feedback.
+        </div>
+        <div class="pcard-tags">
+          <span class="ptag">Python</span>
+          <span class="ptag">PyQt6</span>
+          <span class="ptag">NIST 800-63B</span>
+          <span class="ptag">Cryptography</span>
+        </div>
+        <div class="pcard-link">View on GitHub <span>→</span></div>
+      </a>
+
+      <a href="#" class="pcard reveal reveal-d1">
+        <div class="pcard-ico">🐧</div>
+        <div class="pcard-cat">Linux · Systems Security</div>
+        <div class="pcard-title">Linux Bash Security Fundamentals Lab</div>
+        <div class="pcard-desc">
+          Security-focused bash scripting lab covering file permissions, SSH hardening, cron automation,
+          log parsing, backup strategies with tar &amp; rsync, and system integrity checks.
+        </div>
+        <div class="pcard-tags">
+          <span class="ptag">Linux</span>
+          <span class="ptag">Bash</span>
+          <span class="ptag">SSH</span>
+          <span class="ptag">OpenVPN</span>
+          <span class="ptag">Automation</span>
+        </div>
+        <div class="pcard-link">View on GitHub <span>→</span></div>
+      </a>
+
+      <a href="#" class="pcard reveal reveal-d2">
+        <div class="pcard-ico">📋</div>
+        <div class="pcard-cat">GRC · Compliance</div>
+        <div class="pcard-title">Cybersecurity Audit Framework (GRC)</div>
+        <div class="pcard-desc">
+          Simulated audit scenarios across financial and healthcare sectors, applying NIST RMF, CSF 2.0,
+          CIS Controls v8, and ISO 27001. Includes risk registers, gap analysis, and remediation roadmaps.
+        </div>
+        <div class="pcard-tags">
+          <span class="ptag">NIST RMF</span>
+          <span class="ptag">CSF 2.0</span>
+          <span class="ptag">ISO 27001</span>
+          <span class="ptag">CIS v8</span>
+          <span class="ptag">GRC</span>
+        </div>
+        <div class="pcard-link">View on GitHub <span>→</span></div>
+      </a>
+
+      <a href="#" class="pcard reveal reveal-d3">
+        <div class="pcard-ico">🔐</div>
+        <div class="pcard-cat">Python · Cryptography</div>
+        <div class="pcard-title">Cryptographic Integrity Tools</div>
+        <div class="pcard-desc">
+          Python utilities for SHA-256/SHA-512 hashing, file integrity verification, and symmetric
+          encryption — applied to carbon credit data integrity workflows at Peer Carbon Earth.
+        </div>
+        <div class="pcard-tags">
+          <span class="ptag">Python</span>
+          <span class="ptag">SHA-256</span>
+          <span class="ptag">AES</span>
+          <span class="ptag">Integrity</span>
+          <span class="ptag">Climate Tech</span>
+        </div>
+        <div class="pcard-link">View on GitHub <span>→</span></div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════ BLOG ═══════════ -->
+<section id="blog">
+  <div class="container">
+    <p class="sec-label reveal">Insights &amp; Writeups</p>
+    <h2 class="sec-title reveal">Blog</h2>
+
+    <div class="blog-grid">
+
+      <a href="#" class="bcard reveal">
+        <div class="bcard-img">
+          <!-- SIEM diagram illustration -->
+          <svg viewBox="0 0 300 160" width="260" fill="none">
+            <rect x="20" y="40" width="70" height="40" rx="4" fill="rgba(0,232,122,.15)" stroke="#00e87a" stroke-width="1"/>
+            <text x="55" y="64" text-anchor="middle" fill="#00e87a" font-size="9" font-family="JetBrains Mono">Wazuh</text>
+            <rect x="210" y="40" width="70" height="40" rx="4" fill="rgba(56,163,245,.15)" stroke="#38a3f5" stroke-width="1"/>
+            <text x="245" y="64" text-anchor="middle" fill="#38a3f5" font-size="9" font-family="JetBrains Mono">Splunk</text>
+            <rect x="115" y="60" width="70" height="40" rx="4" fill="rgba(0,232,122,.08)" stroke="rgba(0,232,122,.3)" stroke-width="1"/>
+            <text x="150" y="84" text-anchor="middle" fill="#00e87a" font-size="7" font-family="JetBrains Mono">Forwarder</text>
+            <line x1="90" y1="60" x2="115" y2="80" stroke="rgba(0,232,122,.5)" stroke-width="1" stroke-dasharray="4 3"/>
+            <line x1="185" y1="80" x2="210" y2="60" stroke="rgba(56,163,245,.5)" stroke-width="1" stroke-dasharray="4 3"/>
+            <circle cx="90"  cy="60"  r="3" fill="#00e87a"/>
+            <circle cx="210" cy="60"  r="3" fill="#38a3f5"/>
+            <circle cx="115" cy="80"  r="3" fill="#00e87a" opacity=".6"/>
+            <circle cx="185" cy="80"  r="3" fill="#38a3f5" opacity=".6"/>
+          </svg>
+          <div class="bcard-img-grad"></div>
+        </div>
+        <div class="bcard-body">
+          <div class="bcard-meta">
+            <span class="bcard-date">May 2025</span>
+            <span class="bcard-tag">SIEM</span>
+          </div>
+          <div class="bcard-title">Building a Dual-SIEM Home Lab: Wazuh + Splunk Integration</div>
+          <div class="bcard-excerpt">A step-by-step walkthrough of integrating Wazuh's endpoint detection with Splunk Free for centralized visibility and correlation rule development.</div>
+          <div class="bcard-more">Read more →</div>
+        </div>
+      </a>
+
+      <a href="#" class="bcard reveal reveal-d1">
+        <div class="bcard-img">
+          <!-- RBAC tree illustration -->
+          <svg viewBox="0 0 300 160" width="260" fill="none">
+            <circle cx="150" cy="35" r="18" fill="rgba(56,163,245,.15)" stroke="#38a3f5" stroke-width="1"/>
+            <text x="150" y="39" text-anchor="middle" fill="#38a3f5" font-size="7" font-family="JetBrains Mono">Azure AD</text>
+            <circle cx="80"  cy="100" r="16" fill="rgba(0,232,122,.12)" stroke="#00e87a" stroke-width="1"/>
+            <circle cx="150" cy="100" r="16" fill="rgba(0,232,122,.12)" stroke="#00e87a" stroke-width="1"/>
+            <circle cx="220" cy="100" r="16" fill="rgba(0,232,122,.12)" stroke="#00e87a" stroke-width="1"/>
+            <text x="80"  y="104" text-anchor="middle" fill="#00e87a" font-size="6" font-family="JetBrains Mono">Owner</text>
+            <text x="150" y="104" text-anchor="middle" fill="#00e87a" font-size="6" font-family="JetBrains Mono">Contrib</text>
+            <text x="220" y="104" text-anchor="middle" fill="#00e87a" font-size="6" font-family="JetBrains Mono">Reader</text>
+            <line x1="150" y1="53" x2="80"  y2="84" stroke="rgba(0,232,122,.4)" stroke-width="1"/>
+            <line x1="150" y1="53" x2="150" y2="84" stroke="rgba(0,232,122,.4)" stroke-width="1"/>
+            <line x1="150" y1="53" x2="220" y2="84" stroke="rgba(0,232,122,.4)" stroke-width="1"/>
+          </svg>
+          <div class="bcard-img-grad"></div>
+        </div>
+        <div class="bcard-body">
+          <div class="bcard-meta">
+            <span class="bcard-date">Apr 2025</span>
+            <span class="bcard-tag">Cloud Security</span>
+          </div>
+          <div class="bcard-title">Azure RBAC Best Practices: Least Privilege in Action</div>
+          <div class="bcard-excerpt">How to implement and audit Role-Based Access Control in Azure — from custom role definitions to PIM just-in-time access — with real lab configurations.</div>
+          <div class="bcard-more">Read more →</div>
+        </div>
+      </a>
+
+      <a href="#" class="bcard reveal reveal-d2">
+        <div class="bcard-img">
+          <!-- Certification path timeline -->
+          <svg viewBox="0 0 300 160" width="260" fill="none">
+            <line x1="30" y1="80" x2="270" y2="80" stroke="rgba(0,232,122,.2)" stroke-width="1"/>
+            <circle cx="70"  cy="80" r="14" fill="rgba(0,232,122,.2)"  stroke="#00e87a" stroke-width="1.5"/>
+            <circle cx="150" cy="80" r="14" fill="rgba(56,163,245,.15)" stroke="#38a3f5" stroke-width="1.5"/>
+            <circle cx="230" cy="80" r="14" fill="rgba(255,77,106,.1)"  stroke="#ff4d6a" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <text x="70"  y="84" text-anchor="middle" fill="#00e87a" font-size="7" font-family="JetBrains Mono">ISC2</text>
+            <text x="150" y="84" text-anchor="middle" fill="#38a3f5" font-size="6" font-family="JetBrains Mono">AZ-500</text>
+            <text x="230" y="84" text-anchor="middle" fill="#ff4d6a" font-size="7" font-family="JetBrains Mono">eJPT</text>
+            <text x="70"  y="110" text-anchor="middle" fill="rgba(0,232,122,.5)" font-size="6" font-family="JetBrains Mono">Achieved</text>
+            <text x="150" y="110" text-anchor="middle" fill="rgba(56,163,245,.5)"  font-size="6" font-family="JetBrains Mono">In Progress</text>
+            <text x="230" y="110" text-anchor="middle" fill="rgba(255,77,106,.5)"  font-size="6" font-family="JetBrains Mono">Upcoming</text>
+          </svg>
+          <div class="bcard-img-grad"></div>
+        </div>
+        <div class="bcard-body">
+          <div class="bcard-meta">
+            <span class="bcard-date">Mar 2025</span>
+            <span class="bcard-tag">Career</span>
+          </div>
+          <div class="bcard-title">From Analyst to Pentester: My Path to the eJPT Certification</div>
+          <div class="bcard-excerpt">Why I chose eJPT as my offensive security entry point, how I'm structuring my study plan, and the resources making a real difference.</div>
+          <div class="bcard-more">Read more →</div>
+        </div>
+      </a>
+
+      <a href="#" class="bcard reveal reveal-d3">
+        <div class="bcard-img">
+          <!-- NIST CSF wheel-like illustration -->
+          <svg viewBox="0 0 300 160" width="260" fill="none">
+            <circle cx="150" cy="80" r="55" stroke="rgba(0,232,122,.15)" stroke-width="1"/>
+            <circle cx="150" cy="80" r="35" stroke="rgba(56,163,245,.15)" stroke-width="1"/>
+            <circle cx="150" cy="80" r="15" fill="rgba(0,232,122,.12)" stroke="#00e87a" stroke-width="1"/>
+            <text x="150" y="84" text-anchor="middle" fill="#00e87a" font-size="6" font-family="JetBrains Mono">NIST</text>
+            <!-- segments labels -->
+            <text x="150" y="22"  text-anchor="middle" fill="#00e87a"  font-size="7" font-family="JetBrains Mono">Identify</text>
+            <text x="198" y="54"  text-anchor="middle" fill="#38a3f5"  font-size="7" font-family="JetBrains Mono">Protect</text>
+            <text x="198" y="114" text-anchor="middle" fill="#00e87a"  font-size="7" font-family="JetBrains Mono">Detect</text>
+            <text x="150" y="148" text-anchor="middle" fill="#38a3f5"  font-size="7" font-family="JetBrains Mono">Respond</text>
+            <text x="102" y="114" text-anchor="middle" fill="#00e87a"  font-size="7" font-family="JetBrains Mono">Recover</text>
+          </svg>
+          <div class="bcard-img-grad"></div>
+        </div>
+        <div class="bcard-body">
+          <div class="bcard-meta">
+            <span class="bcard-date">Feb 2025</span>
+            <span class="bcard-tag">GRC</span>
+          </div>
+          <div class="bcard-title">Applying NIST CSF 2.0 to a Healthcare Org: A Simulated Audit</div>
+          <div class="bcard-excerpt">A simulated cybersecurity audit for a healthcare clinic, mapping controls to HIPAA, NIST CSF 2.0, and CIS Controls v8 — and what the gap analysis revealed.</div>
+          <div class="bcard-more">Read more →</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <div class="foot-copy">
+    <span>Kanyili Wambua</span> · Cybersecurity Analyst · Nairobi, Kenya
+  </div>
+  <div class="socials">
+    <!-- LinkedIn -->
+    <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" class="social" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+    <!-- GitHub -->
+    <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="social" aria-label="GitHub">
+      <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+    </a>
+    <!-- Twitter / X -->
+    <a href="https://twitter.com/yourhandle" target="_blank" rel="noopener noreferrer" class="social" aria-label="Twitter / X">
+      <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.766l7.726-8.835L1.254 2.25H8.08l4.261 5.635zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </a>
+  </div>
+</footer>
+
+<!-- ═══════════ SCRIPTS ═══════════ -->
+<script>
+  /* ── Typing animation ── */
+  const phrases = [
+    "Cybersecurity Analyst",
+    "Cloud Security Engineer",
+    "Threat Detection Specialist",
+    "IAM & Azure Expert",
+    "Security Researcher"
+  ];
+  let pi = 0, ci = 0, del = false;
+  const typedEl = document.getElementById('typed');
+
+  (function tick() {
+    const cur = phrases[pi];
+    typedEl.textContent = del ? cur.slice(0, ci - 1) : cur.slice(0, ci + 1);
+    del ? ci-- : ci++;
+    if (!del && ci === cur.length) {
+      setTimeout(() => { del = true; tick(); }, 2400);
+      return;
+    }
+    if (del && ci === 0) {
+      del = false;
+      pi = (pi + 1) % phrases.length;
+    }
+    setTimeout(tick, del ? 52 : 95);
+  })();
+
+  /* ── Scroll reveal ── */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('vis');
+        // animate skill bars when panel enters view
+        e.target.querySelectorAll('.fill[data-w]').forEach(bar => {
+          bar.style.width = bar.dataset.w + '%';
         });
-    </script>
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* also trigger bars when skills panel scrolls in */
+  const barObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.fill[data-w]').forEach(b => b.style.width = b.dataset.w + '%');
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.skills-panel').forEach(p => barObs.observe(p));
+
+  /* ── Mobile burger ── */
+  const burger   = document.getElementById('burger');
+  const navlinks = document.getElementById('navlinks');
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    navlinks.classList.toggle('open');
+  });
+  navlinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      burger.classList.remove('open');
+      navlinks.classList.remove('open');
+    });
+  });
+
+  /* ── Active nav highlight on scroll ── */
+  const secs = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('.nav-links a');
+
+  const navObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.4 });
+
+  secs.forEach(s => navObs.observe(s));
+</script>
 </body>
 </html>
