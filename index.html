@@ -173,27 +173,26 @@
       background: radial-gradient(circle, rgba(56,163,245,.06) 0%, transparent 70%);
     }
     .profile-img-wrap {
-  position: absolute;
-  right: calc(5% + 50px);   /* centers within glow-b's 300px width */
-  top: calc(20% + 50px);    /* centers within glow-b's 300px height */
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  border: 2px solid rgba(0, 232, 122, 0.4);
-  box-shadow:
-    0 0 24px rgba(0, 232, 122, 0.15),
-    0 0 0 6px rgba(0, 232, 122, 0.06);
-  z-index: 1;
-}
-
-.profile-img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center top;  /* adjust if your face is cut off */
-  display: block;
-}
+      position: absolute;
+      right: calc(5% + 50px);   /* centers within glow-b's 300px width */
+      top: calc(20% + 50px);    /* centers within glow-b's 300px height */
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 2px solid rgba(0, 232, 122, 0.4);
+      box-shadow:
+        0 0 24px rgba(0, 232, 122, 0.15),
+        0 0 0 6px rgba(0, 232, 122, 0.06);
+      z-index: 1;
+    }
+    .profile-img {
+       width: 100%;
+       height: 100%;
+       border-radius: 50%;
+       object-fit: cover;
+       object-position: center top;  /* adjust if your face is cut off */
+       display: block;
+    }
 
     /* shield SVG illustration */
     .hero-visual {
@@ -532,7 +531,9 @@
   <!-- decorative orbs -->
   <div class="glow-a"></div>
   <div class="glow-b">
-    <img src="https://raw.githubusercontent.com/VictorKanyili/portfolio/refs/heads/main/images/f2ff89f5-c8d0-4a54-94b4-8cdca2c64a88(1).png" alt="Profile" style="width: 65px; height: 65px; border-radius: 70%; object-fit: cover;">
+  </div>
+  <div class="profile-img-wrap">
+  <img src="images/IMG_9843 copy.jpg" alt="Victor Kanyili" class="profile-img"/>
   </div>
   
 
